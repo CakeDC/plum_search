@@ -6,7 +6,7 @@ Installing the Plugin is pretty much as with every other CakePHP Plugin.
 Put the files in `ROOT/plugins/PlumSearch`, using Packagist/Composer:
 ```
 "require": {
-	"skie/plum-search": "dev-cake3"
+	"skie/cakephp-search": "dev-master"
 }
 ```
 and
@@ -28,8 +28,8 @@ Plugin::loadAll(...);
 Internally (method access), you don't use the namespace declaration. The plugin name suffices:
 ```php
 // In a Table
-$this->addBehavior('PlumSeach.Filter');
+$this->addBehavior('PlumSearch.Filterable');
 
 // In a Controller
-public $helpers = ['PlumSeach.Search'];
+public $helpers = ['PlumSearch.Search'];
 ```

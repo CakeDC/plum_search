@@ -83,7 +83,8 @@ abstract class AbstractFilter
     protected function _applicable($data)
     {
         $field = $this->config('name');
-        return $field && (!empty($data[$field]) || $this->_defaultDefined());
+
+        return $field && (!empty($data[$field]) || $this->_defaultDefined() || isset($data[$field]) && (string)$data[$field] !== '');
     }
 
     /**
@@ -91,8 +92,10 @@ abstract class AbstractFilter
      *
      * @return bool
      */
-    protected function _defaultDefined() {
+    protected function _defaultDefined()
+    {
         $default = $this->config('default');
+
         return !empty($default);
     }
 

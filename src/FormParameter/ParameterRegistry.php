@@ -47,8 +47,6 @@ class ParameterRegistry extends ObjectRegistry
     {
         if ($Controller) {
             $this->_Controller = $Controller;
-            $modelClass = $this->_Controller->modelClass;
-            $this->_formName = $this->_Controller->{$modelClass}->alias();
             $this->config($options);
         }
     }
@@ -114,9 +112,14 @@ class ParameterRegistry extends ObjectRegistry
      *
      * @return \Cake\Collection\Collection
      */
-    public function collection()
+    public function collection($collectionMethod = null)
     {
-        return collection($this->_loaded);
+        $collection = collection($this->_loaded);
+        if (is_callable($collectionMethod)) {
+            return $collectionMethod($collection);
+        }
+
+        return $collection;
     }
 
     /**
@@ -140,6 +143,7 @@ class ParameterRegistry extends ObjectRegistry
                 return $this->_Controller->request->data($this->fieldName($name));
             }
         }
+
         return null;
     }
 
@@ -199,5 +203,15 @@ class ParameterRegistry extends ObjectRegistry
         }
 
         return $this->formName . '.' . $name;
+    }
+
+    /**
+     * Returns controller instance.
+     *
+     * @return Cake\Controller\Controller
+     */
+    public function controller()
+    {
+        return $this->_Controller;
     }
 }
